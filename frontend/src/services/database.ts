@@ -449,3 +449,135 @@ export const getPipelineSummary = async () => {
 
   return summary
 }
+
+export const getTasksSummary = async () => {
+  const { data, error } = await supabase
+    .from('tasks')
+    .select('status, due_date')
+
+  if (error) throw error
+
+  const summary = {
+    pending: 0,
+    inProgress: 0,
+    completed: 0,
+    overdue: 0,
+  }
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  data.forEach((task) => {
+    if (task.status === 'pending') summary.pending++
+    else if (task.status === 'in_progress') summary.inProgress++
+    else if (task.status === 'completed') summary.completed++
+
+    // Count overdue tasks
+    if (task.due_date && task.status !== 'completed') {
+      const dueDate = new Date(task.due_date)
+      dueDate.setHours(0, 0, 0, 0)
+      if (dueDate < today) {
+        summary.overdue++
+      }
+    }
+  })
+
+  return summary
+}
+
+export const getWinRate = async () => {
+  const { data, error } = await supabase
+    .from('deals')
+    .select('deal_status')
+
+  if (error) throw error
+
+  const won = data.filter(d => d.deal_status === 'won').length
+  const lost = data.filter(d => d.deal_status === 'lost').length
+  const total = won + lost
+
+  if (total === 0) return 0
+  return Math.round((won / total) * 100)
+}
+
+export const getDealsPerCustomer = async () => {
+  const { data, error } = await supabase
+    .from('deal_customers')
+    .select(`deal_id, customer_id, deal:deal_id(deal_value), customer:customer_id(company_name)`)
+
+  if (error) throw error
+
+  interface CustomerStats {
+    [customerId: string]: { name: string; count: number; totalValue: number }
+  }
+
+  const stats: CustomerStats = {}
+
+  data.forEach((dc: any) => {
+    const customerId = dc.customer_id
+    const dealValue = dc.deal?.deal_value || 0
+
+    if (!stats[customerId]) {
+      stats[customerId] = {
+        name: dc.customer?.company_name || 'Unknown',
+        count: 0,
+        totalValue: 0,
+      }
+    }
+    stats[customerId].count++
+    stats[customerId].totalValue += dealValue
+  })
+
+  return Object.values(stats)
+    .sort((a, b) => b.totalValue - a.totalValue)
+    .slice(0, 5)
+}
+
+export const getRecentActivity = async () => {
+  const { data: recentDeals, error: dealsError } = await supabase
+    .from('deals')
+    .select('id, property_id, deal_value, deal_status, updated_at, property:property_id(address, city, state)')
+    .order('updated_at', { ascending: false })
+    .limit(5)
+
+  if (dealsError) throw dealsError
+
+  const { data: recentTasks, error: tasksError } = await supabase
+    .from('tasks')
+    .select('id, title, status, updated_at, assigned_to_user:assigned_to(first_name, last_name)')
+    .order('updated_at', { ascending: false })
+    .limit(5)
+
+  if (tasksError) throw tasksError
+
+  return {
+    deals: recentDeals || [],
+    tasks: recentTasks || [],
+  }
+}
+
+export const getTasksDueThisWeek = async () => {
+  const today = new Date()
+  const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
+
+  const { data, error } = await supabase
+    .from('tasks')
+    .select('*')
+    .gte('due_date', today.toISOString().split('T')[0])
+    .lte('due_date', nextWeek.toISOString().split('T')[0])
+    .neq('status', 'completed')
+
+  if (error) throw error
+  return data?.length || 0
+}
+
+export const getTotalPipelineValue = async () => {
+  const { data, error } = await supabase
+    .from('deals')
+    .select('deal_value, deal_status')
+    .neq('deal_status', 'lost')
+
+  if (error) throw error
+
+  return data.reduce((sum, deal) => sum + (deal.deal_value || 0), 0)
+}
