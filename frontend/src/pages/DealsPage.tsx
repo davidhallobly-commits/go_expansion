@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Deal, DealStatus } from '../types/database'
 import { getDeals, deleteDeal } from '../services/database'
 import DealForm from '../components/DealForm'
+import DealCustomersModal from '../components/DealCustomersModal'
 
 export default function DealsPage() {
   const [deals, setDeals] = useState<Deal[]>([])
@@ -11,6 +12,8 @@ export default function DealsPage() {
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [selectedStatus, setSelectedStatus] = useState<DealStatus | 'all'>('all')
+  const [modalDealId, setModalDealId] = useState<string | null>(null)
+  const [modalDealAddress, setModalDealAddress] = useState('')
 
   useEffect(() => {
     loadDeals()
@@ -210,6 +213,15 @@ export default function DealsPage() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
+                          setModalDealId(deal.id)
+                          setModalDealAddress(deal.property?.address || 'Unknown')
+                        }}
+                        className="flex-1 text-purple-600 hover:text-purple-700 font-medium text-sm py-2 border border-purple-200 rounded hover:bg-purple-50 transition-colors"
+                      >
+                        Customers
+                      </button>
+                      <button
+                        onClick={() => {
                           setEditingId(deal.id)
                           setShowForm(true)
                         }}
@@ -230,6 +242,18 @@ export default function DealsPage() {
             )}
           </>
         )}
+
+        {/* Deal Customers Modal */}
+        <DealCustomersModal
+          dealId={modalDealId || ''}
+          dealAddress={modalDealAddress}
+          isOpen={modalDealId !== null}
+          onClose={() => {
+            setModalDealId(null)
+            setModalDealAddress('')
+            loadDeals() // Refresh deals in case customers were added/removed
+          }}
+        />
       </main>
     </div>
   )
