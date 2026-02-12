@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Property } from '../types/database'
 import { getProperties, deleteProperty } from '../services/database'
 import PropertyForm from '../components/PropertyForm'
+import AttachmentUpload from '../components/AttachmentUpload'
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([])
@@ -144,6 +145,10 @@ export default function PropertiesPage() {
                 {property.description && (
                   <p className="text-sm text-gray-600 mb-4 line-clamp-2">{property.description}</p>
                 )}
+
+                <div className="mb-4">
+                  <AttachmentUpload entityType="property" entityId={property.id} />
+                </div>
 
                 <div className="flex gap-2">
                   <button

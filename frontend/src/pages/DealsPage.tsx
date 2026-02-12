@@ -3,6 +3,7 @@ import { Deal, DealStatus } from '../types/database'
 import { getDeals, deleteDeal } from '../services/database'
 import DealForm from '../components/DealForm'
 import DealCustomersModal from '../components/DealCustomersModal'
+import AttachmentUpload from '../components/AttachmentUpload'
 
 export default function DealsPage() {
   const [deals, setDeals] = useState<Deal[]>([])
@@ -209,6 +210,10 @@ export default function DealsPage() {
                     {deal.notes && (
                       <p className="text-sm text-gray-600 mb-4 line-clamp-2">{deal.notes}</p>
                     )}
+
+                    <div className="mb-4">
+                      <AttachmentUpload entityType="deal" entityId={deal.id} />
+                    </div>
 
                     <div className="flex gap-2">
                       <button
