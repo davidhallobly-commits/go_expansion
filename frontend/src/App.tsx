@@ -2,6 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import LoginPage from './pages/LoginPage'
 import Dashboard from './pages/Dashboard'
+import ContactsPage from './pages/ContactsPage'
+import PropertiesPage from './pages/PropertiesPage'
+import CustomersPage from './pages/CustomersPage'
+import Navigation from './components/Navigation'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -21,7 +25,14 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" />
   }
 
-  return <>{children}</>
+  return (
+    <div className="flex">
+      <Navigation />
+      <div className="flex-1">
+        {children}
+      </div>
+    </div>
+  )
 }
 
 function AppRoutes() {
@@ -52,7 +63,30 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-      {/* More routes will be added here */}
+      <Route
+        path="/contacts"
+        element={
+          <ProtectedRoute>
+            <ContactsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/properties"
+        element={
+          <ProtectedRoute>
+            <PropertiesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/customers"
+        element={
+          <ProtectedRoute>
+            <CustomersPage />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   )
 }
