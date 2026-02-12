@@ -6,6 +6,7 @@ import ContactsPage from './pages/ContactsPage'
 import PropertiesPage from './pages/PropertiesPage'
 import CustomersPage from './pages/CustomersPage'
 import DealsPage from './pages/DealsPage'
+import TasksPage from './pages/TasksPage'
 import Navigation from './components/Navigation'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -93,6 +94,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <DealsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/tasks"
+        element={
+          <ProtectedRoute>
+            <TasksPage />
           </ProtectedRoute>
         }
       />
