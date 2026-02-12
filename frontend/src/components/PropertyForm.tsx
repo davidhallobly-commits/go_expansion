@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getProperty, createProperty, updateProperty } from '../services/database'
-import { Property } from '../types/database'
+import type { Property, PropertyType } from '../types/database'
 
 interface PropertyFormProps {
   propertyId?: string
@@ -17,7 +17,7 @@ export default function PropertyForm({ propertyId, onClose }: PropertyFormProps)
     city: '',
     state: '',
     zip: '',
-    property_type: 'commercial_space' as const,
+    property_type: 'commercial_space' as PropertyType,
     square_footage: '',
     price_ask: '',
     description: '',

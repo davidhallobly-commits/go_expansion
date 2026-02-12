@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../services/supabase'
-import { Attachment } from '../types/database'
+import type { Attachment } from '../types/database'
 import { getAttachments, deleteAttachment } from '../services/database'
 
 interface AttachmentUploadProps {
@@ -9,7 +9,7 @@ interface AttachmentUploadProps {
   entityName: string
 }
 
-export default function AttachmentUpload({ entityType, entityId, entityName }: AttachmentUploadProps) {
+export default function AttachmentUpload({ entityType, entityId }: AttachmentUploadProps) {
   const [attachments, setAttachments] = useState<Attachment[]>([])
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -98,7 +98,7 @@ export default function AttachmentUpload({ entityType, entityId, entityName }: A
     }
   }
 
-  const handleDownload = async (filePath: string, fileName: string) => {
+  const handleDownload = async (filePath: string, _fileName: string) => {
     try {
       const { data } = await supabase.storage
         .from('attachments')

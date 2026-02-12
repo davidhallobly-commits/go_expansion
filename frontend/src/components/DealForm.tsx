@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getDeal, createDeal, updateDeal, getProperties, getContacts } from '../services/database'
-import { Deal, Property, Contact } from '../types/database'
+import type { Deal, Property, Contact, DealStatus } from '../types/database'
 
 interface DealFormProps {
   dealId?: string
@@ -18,7 +18,7 @@ export default function DealForm({ dealId, onClose }: DealFormProps) {
     property_id: '',
     source_contact_id: '',
     deal_value: '',
-    deal_status: 'prospect' as const,
+    deal_status: 'prospect' as DealStatus,
     expected_close_date: '',
     notes: '',
   })

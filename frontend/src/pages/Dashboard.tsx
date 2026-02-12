@@ -9,9 +9,7 @@ import {
   getRecentActivity,
   getTasksDueThisWeek,
   getTotalPipelineValue,
-  getDeals,
   getContacts,
-  getTasks,
 } from '../services/database'
 
 export default function Dashboard() {
@@ -37,10 +35,9 @@ export default function Dashboard() {
   })
   const [winRate, setWinRate] = useState(0)
   const [dealsPerCustomer, setDealsPerCustomer] = useState<any[]>([])
-  const [recentActivity, setRecentActivity] = useState({ deals: [], tasks: [] })
+  const [recentActivity, setRecentActivity] = useState<{ deals: any[]; tasks: any[] }>({ deals: [], tasks: [] })
   const [tasksDueThisWeek, setTasksDueThisWeek] = useState(0)
   const [totalPipelineValue, setTotalPipelineValue] = useState(0)
-  const [totalDeals, setTotalDeals] = useState(0)
   const [totalContacts, setTotalContacts] = useState(0)
 
   useEffect(() => {
@@ -60,7 +57,6 @@ export default function Dashboard() {
         activityData,
         dueDateData,
         pipelineValueData,
-        dealsData,
         contactsData,
       ] = await Promise.all([
         getPipelineSummary(),
@@ -70,7 +66,6 @@ export default function Dashboard() {
         getRecentActivity(),
         getTasksDueThisWeek(),
         getTotalPipelineValue(),
-        getDeals(),
         getContacts(),
       ])
 
@@ -81,7 +76,6 @@ export default function Dashboard() {
       setRecentActivity(activityData)
       setTasksDueThisWeek(dueDateData)
       setTotalPipelineValue(pipelineValueData)
-      setTotalDeals(dealsData.length)
       setTotalContacts(contactsData.length)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load dashboard data')

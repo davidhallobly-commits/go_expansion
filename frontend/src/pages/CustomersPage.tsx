@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Customer } from '../types/database'
+import type { Customer } from '../types/database'
 import { getCustomers, deleteCustomer } from '../services/database'
 import CustomerForm from '../components/CustomerForm'
 

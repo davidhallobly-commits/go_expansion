@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import { Contact, Property, Deal, Customer, DealCustomer, Task, Attachment } from '../types/database'
+import type { Contact, Property, Deal, Customer, DealCustomer, Task, Attachment } from '../types/database'
 
 // ============ CONTACTS ============
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getContact, createContact, updateContact } from '../services/database'
-import { Contact } from '../types/database'
+import type { Contact } from '../types/database'
 
 interface ContactFormProps {
   contactId?: string

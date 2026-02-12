@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { getTask, createTask, updateTask, getTasks, getDeals, getContacts, getCustomers } from '../services/database'
+import { getTask, createTask, updateTask, getDeals, getContacts, getCustomers } from '../services/database'
 import { supabase } from '../services/supabase'
-import { Task, User, Deal, Contact, Customer } from '../types/database'
+import type { Task, User, Deal, Contact, Customer, TaskStatus } from '../types/database'
 
 interface TaskFormProps {
   taskId?: string
@@ -27,7 +27,7 @@ export default function TaskForm({ taskId, onClose }: TaskFormProps) {
     contact_id: '',
     customer_id: '',
     due_date: '',
-    status: 'pending' as const,
+    status: 'pending' as TaskStatus,
   })
 
   useEffect(() => {

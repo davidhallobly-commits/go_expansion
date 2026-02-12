@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Task, TaskStatus, User } from '../types/database'
-import { getTasks, deleteTask, getContacts, getProperties, getCustomers } from '../services/database'
+import type { Task, TaskStatus, User } from '../types/database'
+import { getTasks, deleteTask } from '../services/database'
 import { supabase } from '../services/supabase'
 import TaskForm from '../components/TaskForm'
 

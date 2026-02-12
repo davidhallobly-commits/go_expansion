@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Property } from '../types/database'
+import type { Property } from '../types/database'
 import { getProperties, deleteProperty } from '../services/database'
 import PropertyForm from '../components/PropertyForm'
 import AttachmentUpload from '../components/AttachmentUpload'
@@ -147,7 +147,7 @@ export default function PropertiesPage() {
                 )}
 
                 <div className="mb-4">
-                  <AttachmentUpload entityType="property" entityId={property.id} />
+                  <AttachmentUpload entityType="property" entityId={property.id} entityName={property.address} />
                 </div>
 
                 <div className="flex gap-2">

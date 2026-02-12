@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Deal, DealStatus } from '../types/database'
+import type { Deal, DealStatus } from '../types/database'
 import { getDeals, deleteDeal } from '../services/database'
 import DealForm from '../components/DealForm'
 import DealCustomersModal from '../components/DealCustomersModal'
@@ -212,7 +212,7 @@ export default function DealsPage() {
                     )}
 
                     <div className="mb-4">
-                      <AttachmentUpload entityType="deal" entityId={deal.id} />
+                      <AttachmentUpload entityType="deal" entityId={deal.id} entityName={deal.property?.address || 'Deal'} />
                     </div>
 
                     <div className="flex gap-2">

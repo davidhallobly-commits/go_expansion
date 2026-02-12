@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../services/supabase'
-import { User as SupabaseUser } from '@supabase/supabase-js'
-import { User } from '../types/database'
+import type { User as SupabaseUser } from '@supabase/supabase-js'
+import type { User } from '../types/database'
 
 interface AuthContextType {
   user: User | null
@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth()
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
         setSupabaseUser(session.user)
         // Fetch user profile

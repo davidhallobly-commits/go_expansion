@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getCustomer, createCustomer, updateCustomer } from '../services/database'
-import { Customer } from '../types/database'
+import type { Customer } from '../types/database'
 
 interface CustomerFormProps {
   customerId?: string

@@ -29,6 +29,9 @@ export interface Contact {
   updated_at: string
 }
 
+// Property type
+export type PropertyType = 'commercial_space' | 'office' | 'retail' | 'other'
+
 // Property (commercial real estate)
 export interface Property {
   id: string
@@ -36,7 +39,7 @@ export interface Property {
   city: string
   state: string
   zip: string
-  property_type: 'commercial_space' | 'office' | 'retail' | 'other'
+  property_type: PropertyType
   square_footage: number | null
   price_ask: number | null
   description: string | null

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getDealCustomers, createDealCustomer, updateDealCustomer, deleteDealCustomer, getCustomers } from '../services/database'
-import { DealCustomer, Customer, CustomerDealStatus } from '../types/database'
+import type { DealCustomer, Customer, CustomerDealStatus } from '../types/database'
 
 interface DealCustomersModalProps {
   dealId: string

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Contact } from '../types/database'
+import type { Contact } from '../types/database'
 import { getContacts, deleteContact } from '../services/database'
 import ContactForm from '../components/ContactForm'
 
