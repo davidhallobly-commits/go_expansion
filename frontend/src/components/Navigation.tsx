@@ -14,6 +14,7 @@ export default function Navigation() {
 
   const navItems = [
     { href: '/', label: 'Dashboard', icon: '📊' },
+    { href: '/deals', label: 'Deals', icon: '💼' },
     { href: '/contacts', label: 'Contacts', icon: '👥' },
     { href: '/properties', label: 'Properties', icon: '🏢' },
     { href: '/customers', label: 'Customers', icon: '🏭' },

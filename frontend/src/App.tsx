@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard'
 import ContactsPage from './pages/ContactsPage'
 import PropertiesPage from './pages/PropertiesPage'
 import CustomersPage from './pages/CustomersPage'
+import DealsPage from './pages/DealsPage'
 import Navigation from './components/Navigation'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -84,6 +85,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <CustomersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/deals"
+        element={
+          <ProtectedRoute>
+            <DealsPage />
           </ProtectedRoute>
         }
       />
